@@ -165,7 +165,7 @@ public class DisplayFrame extends javax.swing.JFrame {
         try {
             // OntModel model = OpenOWL.OpenConnectOWL();
 
-            System.out.println("Getting ListNames");  // get the name list querry
+            System.out.println("Listar nomberes");  // get the name list querry
             String queryString;
             queryString = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
                     + "PREFIX saidi:<http://www.semanticweb.org/msigf65thin/ontologies/2021/5/PizzaTutorial#>"
