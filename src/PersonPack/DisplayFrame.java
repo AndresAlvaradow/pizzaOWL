@@ -10,7 +10,7 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -22,19 +22,11 @@ public class DisplayFrame extends javax.swing.JFrame {
      * Creates new form DisplayFrame
      */
     public ArrayList<String> ListNames = new ArrayList<String>();  // for name list
-    DefaultTableModel modelo;
 
     public DisplayFrame() {
         initComponents();
-        DefaultTableModel modelo;
-        modelo = new DefaultTableModel();
-        modelo.addColumn("Pan base");
-        modelo.addColumn("Queso");
-        modelo.addColumn("Carne");
-        modelo.addColumn("Salsa");
-        modelo.addColumn("Marisco");
-        modelo.addColumn("Vegetales");
-        this.jTable1.setModel(modelo);
+        limpiarLista();
+
         this.setLocationRelativeTo(null);
     }
 
@@ -52,8 +44,9 @@ public class DisplayFrame extends javax.swing.JFrame {
         jButtonIngredientes = new javax.swing.JButton();
         jComBoxNameList = new javax.swing.JComboBox();
         jButtonCargar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jListPizza = new javax.swing.JList<>();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,38 +88,29 @@ public class DisplayFrame extends javax.swing.JFrame {
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Pan B", "Queso", "Carne", "salsa", "Mariscos", "Vegetales"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
+        jListPizza.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane2.setViewportView(jListPizza);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 747, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(190, 190, 190)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(144, 144, 144)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -134,9 +118,14 @@ public class DisplayFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -147,7 +136,9 @@ public class DisplayFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -155,7 +146,8 @@ public class DisplayFrame extends javax.swing.JFrame {
 
     private void jButtonIngredientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIngredientesActionPerformed
         // TODO add your handling code here:
-
+        // agrrgarIngredientes();
+        obtenerPanBase();
 
     }//GEN-LAST:event_jButtonIngredientesActionPerformed
 
@@ -236,43 +228,103 @@ public class DisplayFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonCargar;
     private javax.swing.JButton jButtonIngredientes;
     private javax.swing.JComboBox jComBoxNameList;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JList<String> jListPizza;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 
-    public void obtenerPanBase() {
+    public DefaultListModel limpiarLista() {
+        DefaultListModel modelo = new DefaultListModel();
+        jListPizza.setModel(modelo);
+        return modelo;
+    }
+
+    public DefaultListModel agrrgarIngredientes() {
+        DefaultListModel modelo = new DefaultListModel();
+
         try {
             // OntModel model = OpenOWL.OpenConnectOWL();
 
             System.out.println("Getting ListNames");  // get the name list querry
             String queryString;
             queryString = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
+                    + "PREFIX owl: <http://www.w3.org/2002/07/owl#>"
                     + "PREFIX saidi:<http://www.semanticweb.org/msigf65thin/ontologies/2021/5/PizzaTutorial#>"
-                    + "SELECT *"
-                    + "WHERE { ?S rdfs:subClassOf saidi:PizzaBase}";
+                    + "SELECT ?h"
+                    + "WHERE { saidi:BBQPizza rdfs:subClassOf ?o ."
+                    + "?o owl:someValuesFrom ?h}";
 
             com.hp.hpl.jena.query.ResultSet results = OpenOWL.ExecSparQl(queryString); //all method ExecSparQl from OpenOWL class
 
             while (results.hasNext()) {
 
                 QuerySolution soln = results.nextSolution();
-                String NameOfPerson = soln.getResource("S").getLocalName();
+                String NameOfPerson = soln.getResource("S").getLocalName();// aqui van el recurso o literal
                 //test --
                 System.out.println("S " + NameOfPerson.toString());
                 ListNames.add(NameOfPerson.toString());
-
+                System.out.println(NameOfPerson.toString());
                 // RDFNode x = soln.get("Propertyval");
                 // String xx = String.valueOf(x);
                 // java.nio.ByteBuffer xxx = Charset.forName("UTF-8").encode(xx);
                 // String xs = xxx.toString();
             }
-            jComBoxNameList.removeAllItems(); //  combobox nameList
+            //jComBoxNameList.removeAllItems(); //  combobox nameList
             for (int i = 0; i < ListNames.size(); i++) {
 
-                jComBoxNameList.addItem(ListNames.get(i));
-                
+                //jComBoxNameList.addItem(ListNames.get(i));
+                modelo.addElement(ListNames.get(i));
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return modelo;
+    }
+
+    public void obtenerPanBase() {
+        //  DefaultListModel modelo = new DefaultListModel();
+        try {
+            // OntModel model = OpenOWL.OpenConnectOWL();
+
+            System.out.println("Getting ListNames");  // get the name list querry
+            String queryString;
+            queryString = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
+                    + "PREFIX owl: <http://www.w3.org/2002/07/owl#>"
+                    + "PREFIX saidi:<http://www.semanticweb.org/msigf65thin/ontologies/2021/5/PizzaTutorial#>"
+                    + "SELECT ?h"
+                    + "WHERE { saidi:BBQPizza rdfs:subClassOf ?o ."
+                    + "?o owl:someValuesFrom ?h }";
+
+            com.hp.hpl.jena.query.ResultSet results = OpenOWL.ExecSparQl(queryString); //all method ExecSparQl from OpenOWL class
+
+            while (results.hasNext()) {
+               // QuerySolution soln = results.nextSolution();
+                QuerySolution soln = results.nextSolution();
+                String NameOfPerson = soln.getResource("h").getLocalName();
+                //test --
+                System.out.println("S " + NameOfPerson.toString());
+                ListNames.add(NameOfPerson.toString());
+//
+//                RDFNode x = soln.getResource("h");
+//                System.out.println(x);
+//                //x.asResource().getLocalName();
+//                String xx = String.valueOf(x.asResource().getLocalName());
+//                System.out.println("----->" + x);
+//                java.nio.ByteBuffer xxx = Charset.forName("UTF-8").encode(xx);
+//
+//                String xs = xxx.toString();
+
+//                ListNames.add(xx);
+
+            }
+            jComboBox1.removeAllItems(); //  combobox nameList
+            for (int i = 0; i < ListNames.size(); i++) {
+
+                jComboBox1.addItem(ListNames.get(i));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
